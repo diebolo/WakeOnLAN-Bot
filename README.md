@@ -1,5 +1,13 @@
 # WakeOnLAN-Bot
 
+
+My fork lets the bot keep trying for connection if no connection is immediately made (my RPi took a little longer to startup while pm2 already started this node).
+Also fixed some substitution bugs where it wouldn't run. Not all functions are working correct, but wake does work nicely.
+
+The rest of tarun5060s readme:
+
+---
+
 This is a simple Discord bot that can be used to wake up a computer using Wake-On-LAN (WOL). It also includes some additional commands such as ping and uptime, and the ability to evaluate and execute arbitrary code.
 Big thanks to [m4](https://github.com/m4tonoob/) for helping me with the JS part.
 
