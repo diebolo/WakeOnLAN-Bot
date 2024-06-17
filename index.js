@@ -3,6 +3,20 @@ const discord = require("discord.js");
 const client = new discord.Client();
 const child_process = require("child_process");
 
+// Function to log in to the Discord bot
+function loginBot() {
+  client.login(config.token)
+    .then(() => {
+      console.log(`Logged in as ${client.user.tag} on ${Date()}!`);
+    })
+    .catch((error) => {
+      console.error("Error logging in:", error);
+      // If login fails, try again after 10 seconds
+      setTimeout(loginBot, 10000);
+    });
+}
+
+
 // Online status
 client.on("ready", () => {
   console.log(`Logged in as ${client.user.tag} on ${Date()}!`);
@@ -12,10 +26,10 @@ client.on("ready", () => {
 client.on("message", (msg) => {
   if (msg.author.id === config.ownerID && msg.content === "wake") {
     child_process.exec(
-      "wakeonlan -i ${config.ipAddress} ${config.macAddress}",
+      "wakeonlan " + config.macAddress,
       (err, stdout) => {
         if (err) {
-          msg.channel.send(err);
+          msg.channel.send(err + "null");
         } else {
           msg.channel.send("woken ✅");
         }
@@ -77,7 +91,7 @@ function execute(message) {
 function Status(message) {
   child_process.exec("ping " + config.ipAddress + " -c 1", (err, stdout) => {
     if (err) {
-      message.channel.send(err);
+      message.channel.send(err + "null");
     } else {
       const response = stdout.trim();
       if (response) {
@@ -100,4 +114,4 @@ function cleanText(text) {
   return text;
 }
 
-client.login(config.token);
+loginBot();
